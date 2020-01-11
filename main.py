@@ -5,10 +5,10 @@ hyper_param = {
     "feature_size": 2,
     "hidden_layer": 5,
     "label_size": 1,
-    "batch_size": 80,
+    "batch_size": 10,
     "node_per_layer": 10,
     "step": 0.005,
-    "rep": 500
+    "rep": 5000
 }
 
 file_name = 'data.csv'

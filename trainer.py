@@ -3,6 +3,9 @@ from random import random, sample
 import network
 
 class Trainer:
+    modification_ratio = 0.1
+    loss_modifier = 50
+
     def __init__(self, network, features, labels, batch_size=5, train_ratio=0.8):
         self.network = network
         self.features = features
@@ -23,42 +26,53 @@ class Trainer:
             del data_set[index]
         test_set = list(data_set)
         
-        batch = sample(train_set, self.batch_size)
         for i in range(0, reps):
-            print()
-            print("rep " + str(i))
-            loss = 0.0
-            for example in batch:
-                result = self.network.execute(example[0])
-                if (result >= 0 and example[1] == 'L') or\
-                   (result < 0 and example[1] == 'H'):
-                    loss += 1.0
-            print("loss: " + str(loss))
-
-            selected_nodes = sample(self.network.nodes, self.network.hidden_layer)
-            for node in selected_nodes:
-                for i in range(len(node.weights)):
-                    node.weights[i] -= step_size
-            print('reduced')
+            batch = sample(train_set, self.batch_size)
+            loss = self.run_batch(batch)
             
-            new_loss = 0.0
-            for example in batch:
-                result = self.network.execute(example[0])
-                if (result >= 0 and example[1] == 'L') or\
-                   (result < 0 and example[1] == 'H'):
-                    new_loss += 1.0
+            print("\n\nrep " + str(i) + "\nloss: " + str(loss))
 
-            print ('new_loss: ' + str(new_loss))
+            network_nodes = self.network.nodes
+            selection_size = int(len(network_nodes) * self.modification_ratio + 1)
+            selected_nodes = sample(network_nodes, selection_size)
+            self.modify_nodes(selected_nodes, -step_size)
+            
+            new_loss = self.run_batch(batch)
             if new_loss > loss:
+                self.modify_nodes(selected_nodes, 2 * step_size)
                 print('increased')
-                for node in selected_nodes:
-                    for i in range(len(node.weights)):
-                        node.weights[i] += 2 * step_size
+            else:
+                print('decreased')
         
-        loss = 0.0
-        for test_example in test_set:
-            result = self.network.execute(test_example[0])
-            if (result >= 0 and test_example[1] == 'L') or\
-                (result < 0 and test_example[1] == 'H'):
-                loss += 1.0
-        print('loss on test set: ' + str(loss))
+        test_loss = self.run_batch(test_set)
+        print('\nloss on test set: ' + str(test_loss))
+    
+    def run_batch(self, batch):
+        loss = 0
+        for example in batch:
+            result = self.network.execute(example[0])
+            loss += Trainer.get_loss(result, example[1])
+        return loss
+    
+    @staticmethod
+    def get_loss(result, label):
+        if label == 'H':
+            if result < -0.1:
+                return -result * Trainer.loss_modifier
+            elif result > 0:
+                return -result
+            else:
+                return 0.1 * Trainer.loss_modifier
+        else:
+            if result > 0.1:
+                return result * Trainer.loss_modifier
+            elif result < 0:
+                return -result
+            else:
+                return 0.1 * Trainer.loss_modifier
+    
+    @staticmethod
+    def modify_nodes(nodes, amount):
+        for node in nodes:
+            for i in range(len(node.weights)):
+                node.weights[i] += amount

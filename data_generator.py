@@ -4,7 +4,7 @@ from random import random
 def ground_truth(x):
     return (x)
 
-data_size = 100
+data_size = 1000
 
 while True:
     data = [[10 * random(), 10 * random()] for x in range(data_size)]
@@ -17,7 +17,7 @@ while True:
         else:
             item.append('L')
 
-    if count >= 40 and count <= 60:
+    if count >= data_size * 0.45 and count <= data_size * 0.55:
         break
 
 data_str = ''

@@ -8,11 +8,16 @@ class Network:
         self.num_input = num_input
         self.input = []
         self.layers = []
+        self.nodes = []
         self.layers.append(Layer("L0", self.node_per_layer, self.num_input))
         for i in range(1, hidden_layer):
             self.layers.append(Layer("L" + str(i), self.node_per_layer, self.node_per_layer))
         self.output_layer = Layer("LOUT", 1, self.node_per_layer)
         self.output = None
+        for layer in self.layers:
+            for node in layer.nodes:
+                self.nodes.append(node)
+        self.nodes.append(self.output_layer.nodes[0])
     def execute(self, input):
         if type(input) != type(self.input) or len(input) != self.num_input:
             print("Wrong input given to network " + self.id)
@@ -30,6 +35,23 @@ class Network:
             layer.reset()
         self.output_layer.reset()
         self.output = None
+    def __repr__(self):
+        desc = "Network ID: " + self.id + '\n'
+        desc += "Current input: " + str(self.input) + '\n'
+        for layer in self.layers:
+            desc += "    Layer ID: " + layer.id + '\n'
+            desc += "        Given input: " + str(layer.input) + '\n'
+            for node in layer.nodes:
+                desc += "        Node ID: " + node.id + '\n'
+                desc += "            Weights: " + str(node.weights) + '\n'
+                desc += "            Current output: " + str(node.output) + '\n'
+        desc += "    Layer ID: " + self.output_layer.id + '\n'
+        for node in self.output_layer.nodes:
+            desc += "        Node ID: " + node.id + '\n'
+            desc += "            Weights: " + str(node.weights) + '\n'
+            desc += "            Current output: " + str(node.output) + '\n'
+        desc += "Final output: " + str(self.output) + '\n\n'
+        return desc
 
 class Layer:
     def __init__(self, id, node_per_layer, num_input):
@@ -63,7 +85,7 @@ class Node:
         self.num_input = num_input
         self.weights = []
         for i in range(num_input + 1):
-            self.weights.append(num_input * random())
+            self.weights.append(random() - 0.5)
         self.input = []
         self.output = None
     def execute(self, input):

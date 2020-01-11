@@ -2,13 +2,13 @@
 
 This is a simple neural network made without using any external libraries. One might find this useful in educational circumstances.
 
-To run training and see results, simply execute following command on terminal:
+To run network training and see results, simply execute following command on terminal:
 
 ```
 python3 main.py
 ```
 
-To tweak some hyper-parameters and use other data, you need to change some codes in main.py.
+For more custom usage, you must adapt and modify code manually.
 
 ---
 ### main.py
@@ -26,5 +26,6 @@ Saves and loads an instance of network model.
 
 ---
 ## History
-Jan 10, 2019: Project started.
+Jan 10, 2019: Project started.  
+
 Jan 11, 2019: Constructed basic framework.

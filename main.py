@@ -11,9 +11,12 @@ hyper_param = {
     "rep": 500
 }
 
-data_set = open('data.csv').read().split('\n')
+file_name = 'data.csv'
+with open(file_name) as data_file:
+    data_set = data_file.read()
+data_set = data_set.split('\n')
 data_set = [x.split(',') for x in data_set]
-data_set = data_set[0:100]
+data_set = data_set[0:-1]
 
 features = [[float(x[0]), float(x[1])] for x in data_set]
 labels = [x[2] for x in data_set]

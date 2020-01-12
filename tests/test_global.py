@@ -4,9 +4,12 @@ secondary_separator = ','
 default_filename_classification = 'tests/test_classification.data'
 dafault_filename_regression = 'tests/test_regression.data'
 
-def load_data(filename):
-    with open(filename) as data_file:
-        data_set = data_file.read()
+def load_data(data, isfile=True):
+    if isfile:
+        with open(data) as data_file:
+            data_set = data_file.read()
+    else:
+        data_set = data
     data_set = data_set.split(primary_separator)
     data_set = [x.split(secondary_separator) for x in data_set]
 

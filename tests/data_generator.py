@@ -12,10 +12,10 @@ while True:
 
     for item in data:
         if ground_truth(item[0]) <= item[1]:
-            item.append('H')
+            item.append(10)
             count += 1
         else:
-            item.append('L')
+            item.append(-10)
 
     if count >= data_size * 0.45 and count <= data_size * 0.55:
         break
@@ -23,7 +23,7 @@ while True:
 data_str = ''
 
 for item in data:
-    data_str += str(item[0]) + ',' + str(item[1]) + ',' + item[2] + '\n'
+    data_str += str(item[0]) + ',' + str(item[1]) + ',' + str(item[2]) + '\n'
  
 data_file = open("data.csv", "w")
 data_file.write(data_str)

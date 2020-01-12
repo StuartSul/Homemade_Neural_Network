@@ -2,7 +2,7 @@
 
 This is a simple neural network made without using any external libraries. One might find this useful in educational circumstances.
 
-To run test network training and see results, simply execute following command on terminal:
+To run test network training and see results, simply execute the following command on terminal:
 
 ```
 python3 runtests.py

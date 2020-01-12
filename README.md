@@ -26,34 +26,34 @@ features, labels = test_global.load_data(test_global.dafault_filename_regression
 To train and build network for your own use, you may import hnn on your program and use functionalities in hnn.hnn:
 
 ``` python3
-from hnn import hnn
+from hnn.hnn import hnn
 
-hnn.init(NETWORK_NAME, INPUT_WIDTH, NUMBER_OF_LAYERS,
-         NODES_PER_LAYER, FEATURES, LABELS, TRAIN_TEST_RATIO)
+my_hnn = hnn(NETWORK_NAME, INPUT_WIDTH, NUMBER_OF_LAYERS,
+                NODES_PER_LAYER, FEATURES, LABELS, TRAIN_TEST_RATIO)
 
-hnn.train(BATCH_SIZE, LEARNING_RATE, TOTAL_EPOCHS, PERIODS)
+my_hnn.train(BATCH_SIZE, LEARNING_RATE, TOTAL_EPOCHS, PERIODS)
 
-hnn.predict(NEW_DATA)
+my_hnn.predict(NEW_DATA)
 ```
 
 Once trained, you can save and load your network via file IO:
 
 ``` python3
-hnn.save(FILE_NAME)
+my_hnn.save(FILE_NAME)
 
-hnn.load(FILE_NAME)
+new_hnn = hnn.load(FILE_NAME)
 
-hnn.predict(NEW_DATA)
+new_hnn.predict(NEW_DATA)
 ```
 
 You can try sample network models provided in models folder:
 
 ``` python3
-hnn.load('x=y_classification.hnn')
-hnn.predict(NEW_DATA)
+new_hnn = hnn.load('x=y_classification.hnn')
+new_hnn.predict(NEW_DATA)
 
-hnn.load('x=y_regression.hnn')
-hnn.predict(NEW_DATA)
+new_hnn = hnn.load('x=y_regression.hnn')
+new_hnn.predict(NEW_DATA)
 ```
 
 This will be uploaded on pip sooner or later.

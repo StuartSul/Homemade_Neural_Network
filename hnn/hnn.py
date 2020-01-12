@@ -2,13 +2,8 @@ from .network import Network
 from .trainer import Trainer
 from .loader import *
 
-from copy import deepcopy
-
 network = None
 trainer = None
-
-max_correct = -1
-best_network = None
 
 def init(network_name, input_width, 
             num_hidden_layers, node_per_layer, 
@@ -76,34 +71,18 @@ def train(batch_size, learning_rate, total_epochs, periods):
     elif type(periods) is not int or periods < 1 or periods > total_epochs:
         print('ERROR: periods must be an integer value at the range of [1, total_epochs]')
         return
-
-    print('\nInitiating training on network ' + network.id + "...\n")
+        
     epochs_per_period = total_epochs // periods
-
-    global best_network, max_correct
+    print('\nInitiating training on network ' + network.id + "...\n")
     for i in range(periods):
         print("Period " + str(i+1) + " out of " + str(periods))
         print("  loss: " + str(trainer.train(batch_size, learning_rate, epochs_per_period)))
         correct = 0
-        for i in range(len(trainer.features)):
-            result = network.execute(trainer.features[i])
-            if abs(result - trainer.labels[i]) < 10:
-                correct += 1
-        print("  result: " + str(correct) + " correct out of " + str(len(trainer.features)))
-        if (correct > max_correct):
-            print("  new best network. Save")
-            best_network = deepcopy(network)
-            max_correct = correct
     print('\nTraining complete\n')
 
-def predict(feature, use_best = False):
-    if use_best:
-        if best_network == None:
-            print('Must train first before using the best network')
-            return None
-        best_network.execute(feature)
+def predict(feature):
     if network == None:
-        print('Must initialize with init() first')
+        print('Must initialize network with init() first')
     return network.execute(feature)
 
 def save(filename):
@@ -118,8 +97,6 @@ def load(filename):
     print('Successfully loaded network ' + network.id)
 
 def reset():
-    global network, trainer, max_correct, best_network
+    global network, trainer
     network = None
     trainer = None
-    max_correct = -1
-    best_network = None

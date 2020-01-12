@@ -2,30 +2,37 @@
 
 This is a simple neural network made without using any external libraries. One might find this useful in educational circumstances.
 
-To run network training and see results, simply execute following command on terminal:
+To run test network training and see results, simply execute following command on terminal:
 
 ```
-python3 main.py
+python3 runtests.py
 ```
 
-For more custom usage, you must adapt and modify code manually.
+To train and build network for your own use, you may import hnn on your program and use functionalities in hnn.hnn:
+
+``` python3
+from hnn import hnn
+
+hnn.init(NETWORK_NAME, INPUT_WIDTH, NUMBER_OF_LAYERS,
+         NODES_PER_LAYER, FEATURES, LABELS, TRAIN_TEST_RATIO)
+
+hnn.train(BATCH_SIZE, LEARNING_RATE, TOTAL_EPOCHS, PERIODS)
+
+hnn.predict(NEW_DATA)
+```
+
+To be added on pip.
 
 ---
-### main.py
-Defines necessary hyper parameters and input data, and runs an instance of Trainer.
+### hnn/
+Package folder. Defines all network properties, training system, file IO, and other functionalities needed. All APIs are defined in hnn.py.
 
-### network.py
-Defines class Network, Layer, and Node, which overall describe neural network structure and functionalities.
+### tests/
+Contains test codes for debugging.
 
-### trainer.py
-Defines class Trainer, which trains a given network for set amount of time.
-
-### model.py
-Saves and loads an instance of network model.
-
+### runtests.py
+Runs test codes in tests folder.
 
 ---
 ## History
-Jan 10, 2019: Project started.  
-
-Jan 11, 2019: Constructed basic framework.
+Jan 10, 2019: Project started.

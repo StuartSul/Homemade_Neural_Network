@@ -18,9 +18,10 @@ class Network:
             for node in layer.nodes:
                 self.nodes.append(node)
         self.nodes.append(self.output_layer.nodes[0])
+        self.mod_selection = None
     def execute(self, input):
         if type(input) != type(self.input) or len(input) != self.num_input:
-            print("Wrong input given to network " + self.id)
+            print("ERROR: Wrong input given to network " + self.id)
             self.reset()
             return
         self.input = input
@@ -52,6 +53,11 @@ class Network:
             desc += "            Current output: " + str(node.output) + '\n'
         desc += "Final output: " + str(self.output) + '\n\n'
         return desc
+    def modify(self, amount, shuffle=False):
+        if shuffle == True or self.mod_selection == None:
+            self.mod_selection = [int(len(self.nodes) * random())]
+            self.mod_selection.append(int(len(self.nodes[self.mod_selection[0]].weights) * random()))
+        self.nodes[self.mod_selection[0]].weights[self.mod_selection[1]] += amount
 
 class Layer:
     def __init__(self, id, node_per_layer, num_input):
@@ -65,7 +71,7 @@ class Layer:
         self.output = []
     def execute(self, input):
         if type(input) != type(self.input) or len(input) != self.num_input:
-            print("Wrong input given to layer " + self.id)
+            print("ERROR: Wrong input given to layer " + self.id)
             self.reset()
             return
         self.input = input
@@ -90,7 +96,7 @@ class Node:
         self.output = None
     def execute(self, input):
         if type(input) != type(self.input) or len(input) != self.num_input:
-            print("Wrong input given to node " + self.id)
+            print("ERROR: Wrong input given to node " + self.id)
             self.reset()
             return
         self.input = input

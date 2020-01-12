@@ -7,7 +7,8 @@ from .test_global import *
 def sample_relation(x):
     return x
 
-def generate(min, max, size, relation=sample_relation, filename=dafault_filename_regression):
+def generate(min, max, size, relation=sample_relation, 
+                filename=dafault_filename_regression, save=True):
     input_width = len(signature(relation).parameters)
  
     data = []
@@ -25,7 +26,8 @@ def generate(min, max, size, relation=sample_relation, filename=dafault_filename
         data_str += primary_separator
     data_str = data_str[:len(data_str) - len(primary_separator)]
 
-    with open(filename, "w") as data_file:
-        data_file.write(data_str)
+    if save:
+        with open(filename, "w") as data_file:
+            data_file.write(data_str)
     
     return data_str

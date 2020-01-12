@@ -9,7 +9,8 @@ classification_weight = 10
 def sample_divider(x, y):
     return y - x
 
-def generate(min, max, size, divider=sample_divider, filename=default_filename_classification):
+def generate(min, max, size, divider=sample_divider, 
+                filename=default_filename_classification, save=True):
     input_width = len(signature(divider).parameters)
     while True:
         data = []
@@ -38,7 +39,8 @@ def generate(min, max, size, divider=sample_divider, filename=default_filename_c
         data_str += primary_separator
     data_str = data_str[:len(data_str) - len(primary_separator)]
 
-    with open(filename, "w") as data_file:
-        data_file.write(data_str)
+    if save:
+        with open(filename, "w") as data_file:
+            data_file.write(data_str)
     
     return data_str

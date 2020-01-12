@@ -14,11 +14,11 @@ To generate your own test data with user-defined data relation, use the modules 
 from tests import test_global, test_classification, test_regression
 
 # Generates classification test data
-test_classification.generate(MIN_FEATURE_VALUE, MAX_FEATURE_VALUE, DATA_SIZE)
+test_classification.generate(MIN_FEATURE_VALUE, MAX_FEATURE_VALUE, DATA_SIZE, divider=YOUR_FUNCTION)
 features, labels = test_global.load_data(test_global.default_filename_classification)
 
 # Generates regression test data
-test_regression.generate(MIN_FEATURE_VALUE, MAX_FEATURE_VALUE, DATA_SIZE)
+test_regression.generate(MIN_FEATURE_VALUE, MAX_FEATURE_VALUE, DATA_SIZE, relation=YOUR_FUNCTION)
 features, labels = test_global.load_data(test_global.dafault_filename_regression)
 
 ```

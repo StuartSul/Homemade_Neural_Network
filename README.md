@@ -8,7 +8,7 @@ To run test network training and see results, simply execute the following comma
 python3 runtests.py
 ```
 
-To generate your own test data with user-defined data relation, use the modules provided in tests:
+To generate your own test data with user-defined data relation, use the modules provided in tests folder:
 
 ``` python3
 from tests import test_global, test_classification, test_regression
@@ -46,6 +46,16 @@ hnn.load(FILE_NAME)
 hnn.predict(NEW_DATA)
 ```
 
+You can try sample network models provided in models folder:
+
+``` python3
+hnn.load('x=y_classification.hnn')
+hnn.predict(NEW_DATA)
+
+hnn.load('x=y_regression.hnn')
+hnn.predict(NEW_DATA)
+```
+
 This will be uploaded on pip sooner or later.
 
 ---
@@ -57,6 +67,9 @@ Contains test codes for debugging.
 
 ### runtests.py
 Runs test codes in tests folder.
+
+### models/
+Contains trained sample networks.
 
 ---
 ## History

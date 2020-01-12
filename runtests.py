@@ -11,7 +11,7 @@ train_test_ratio = .8
 
 #test_classification.generate(0, 1, 1000)
 #features, labels = test_global.load_data(test_global.default_filename_classification)
-#test_regression.generate(0, 1, 1000)
+test_regression.generate(0, 1, 1000)
 features, labels = test_global.load_data(test_global.dafault_filename_regression)
 
 my_hnn = hnn("TEST", len(features[0]), num_hidden_layer,

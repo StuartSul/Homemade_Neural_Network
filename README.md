@@ -8,6 +8,21 @@ To run test network training and see results, simply execute following command o
 python3 runtests.py
 ```
 
+To generate your own test data with user-defined data relation, use the modules provided in tests:
+
+``` python3
+from tests import test_global, test_classification, test_regression
+
+# Generates classification test data
+test_classification.generate(MIN_FEATURE_VALUE, MAX_FEATURE_VALUE, DATA_SIZE)
+features, labels = test_global.load_data(test_global.default_filename_classification)
+
+# Generates regression test data
+test_regression.generate(MIN_FEATURE_VALUE, MAX_FEATURE_VALUE, DATA_SIZE)
+features, labels = test_global.load_data(test_global.dafault_filename_regression)
+
+```
+
 To train and build network for your own use, you may import hnn on your program and use functionalities in hnn.hnn:
 
 ``` python3
@@ -21,7 +36,17 @@ hnn.train(BATCH_SIZE, LEARNING_RATE, TOTAL_EPOCHS, PERIODS)
 hnn.predict(NEW_DATA)
 ```
 
-To be added on pip.
+Once trained, you can save and load your network via file IO:
+
+``` python3
+hnn.save(FILE_NAME)
+
+hnn.load(FILE_NAME)
+
+hnn.predict(NEW_DATA)
+```
+
+This will be uploaded on pip sooner or later.
 
 ---
 ### hnn/

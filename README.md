@@ -1,6 +1,6 @@
 # Homemade Neural Network
 
-This is a simple neural network made without using any external libraries. One might find this useful in educational circumstances.
+This is a simple neural network made without using any external libraries. One might find this useful in educational circumstances. Python 3.8 was used.
 
 To run test network training and see results, simply execute the following command on terminal:
 

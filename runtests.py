@@ -3,7 +3,7 @@ from hnn import util
 from tests import test_global, test_classification, test_regression
 
 features, labels = test_global.load_data(
-            test_regression.generate(0, 1, 2000, save=False),
+            test_regression.generate(2000, save=False),
             isfile=False)
 
 network_id = 'Test_Network'
@@ -24,4 +24,3 @@ my_hnn = hnn(network_id, input_count, output_count, structure, activation,
                         features, labels, train_ratio, loss_function)
 
 my_hnn.train(batch_size, learning_rate, total_epochs, periods)
-           

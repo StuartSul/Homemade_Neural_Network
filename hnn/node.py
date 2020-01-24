@@ -1,3 +1,4 @@
+import operator
 import random
 
 class Node:
@@ -6,16 +7,15 @@ class Node:
         self.input_count = input_count
         self.activation = activation
         self.weights = []
-        for i in range(self.input_count + 1):
+        for i in range(self.input_count):
             self.weights.append(2 * random.random() - 1)
 
     def execute(self, inputs):
-        output = self.weights[0]
-        for i in range(self.input_count):
-            output += inputs[i] * self.weights[i + 1]
+        output = map(operator.mul, inputs, self.weights)
+        output = sum(output)
         output = self.activation.calculate(output)
         return output
 
     def reset(self):
-        for i in range(self.input_count + 1):
+        for i in range(self.input_count):
             self.weights[i] = (2 * random() - 1)

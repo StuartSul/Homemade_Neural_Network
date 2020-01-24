@@ -63,10 +63,10 @@ new_hnn.predict(NEW_DATA)
 You can try sample network models provided in models folder:
 
 ``` python3
-new_hnn = hnn.load('x=y_classification.hnn')
+new_hnn = hnn.load('models/x=y_classification.hnn')
 new_hnn.predict(NEW_DATA)
 
-new_hnn = hnn.load('x=y_regression.hnn')
+new_hnn = hnn.load('models/x=y_regression.hnn')
 new_hnn.predict(NEW_DATA)
 ```
 

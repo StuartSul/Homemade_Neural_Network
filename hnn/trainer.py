@@ -29,7 +29,9 @@ class Trainer:
         for i in range(len(self.network.layers) - 1, -1, -1):
             layer = self.network.layers[i]
             gradients.insert(0, [])
-            next_derivatives = [[]] * layer.input_count
+            next_derivatives = []
+            for j in range(layer.input_count):
+                next_derivatives.append([])
             for j in range(layer.node_count):
                 node = layer.nodes[j]
                 for k in range(len(derivatives[j])):

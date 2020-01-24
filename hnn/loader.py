@@ -1,7 +1,8 @@
 from .network import Network
+from .util import *
 
-magic = 'sffjvi'
-separator = 'hnnssfjviha*(!#!)@'
+magic = 'hnn_network70527919'
+separator = '\n'
 
 def load_network(filename):
     with open(filename, 'r') as file:
@@ -12,10 +13,30 @@ def load_network(filename):
             print('ERROR: Wrong file format')
             return None
 
-    network = Network(data[1], int(data[2]),
-                        int(data[3]), int(data[4]))
+    network_id = data[1]
+    input_count = int(data[2])
+    output_count = int(data[3])
+    structure = []
 
     index = 5
+    for i in range(int(data[4])):
+        structure.append(int(data[index]))
+        index += 1
+    
+    activation_doc = data[index]
+    index += 1
+
+    if activation_doc == 'linear':
+        activation = Activation.linear
+    elif activation_doc == 'sigmoid':
+        activation = Activation.sigmoid
+    elif activation_doc == 'tanh':
+        activation = Activation.tanh
+    elif activation_doc == 'ReLU':
+        activation = Activation.ReLU
+
+    network = Network(network_id, input_count, output_count, structure, activation)
+
     for node in network.nodes:
         for i in range(len(node.weights)):
             node.weights[i] = float(data[index])
@@ -23,12 +44,18 @@ def load_network(filename):
     
     return network
 
+
 def save_network(network, filename):
     data = magic + separator
     data += network.id + separator +\
-            str(network.input_width) + separator +\
-            str(network.num_hidden_layer) + separator +\
-            str(network.node_per_layer)
+            str(network.input_count) + separator +\
+            str(network.output_count) + separator +\
+            str(len(network.structure))
+    
+    for node_count in structure:
+        data += separator + str(node_count)
+    
+    data += separator + network.activation.__doc__
 
     for node in network.nodes:
         for weight in node.weights:

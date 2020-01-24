@@ -3,18 +3,22 @@ import math
 class Activation:
     @staticmethod
     def linear(x):
+        'linear'
         return x
 
     @staticmethod
     def sigmoid(x):
+        'sigmoid'
         return 1 / (1 + math.exp(-x))
 
     @staticmethod
-    def tanh(x)
+    def tanh(x):
+        'tanh'
         return math.tanh(x)
 
     @staticmethod
-    def ReLU(x)
+    def ReLU(x):
+        'ReLU'
         return max([0, x])
 
 class Loss:

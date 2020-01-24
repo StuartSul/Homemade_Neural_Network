@@ -36,7 +36,7 @@ my_hnn.train(BATCH_SIZE, LEARNING_RATE, TOTAL_EPOCHS, PERIODS)
 my_hnn.predict(NEW_DATA)
 ```
 
-ACTIVATION and LOSS_FUNCTION are defined under hnn/util.py, and structure should be a list of integer, the length of list corresponding to number of layers and each integer value corresponding to number of nodes in each layer. For instance:
+ACTIVATION and LOSS_FUNCTION are defined under hnn/util.py, and structure should be a list of integers: the length of list corresponding to total number of layers and each integer value corresponding to number of nodes in each layer. For instance:
 
 ``` python3
 from hnn.hnn import hnn

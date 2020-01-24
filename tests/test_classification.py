@@ -3,8 +3,6 @@ from random import random
 
 from .test_global import *
 
-classification_weight = 10
-
 # y = x
 def sample_divider(x, y):
     return y - x
@@ -23,10 +21,10 @@ def generate(min, max, size, divider=sample_divider,
                 data[i].append((max - min) * random() + min)
 
             if divider(*data[i]) >= 0:
-                data[i].append(classification_weight)
+                data[i].append(1.0)
                 count += 1
             else:
-                data[i].append(-classification_weight)
+                data[i].append(0.0)
 
         if count >= size * 0.45 and count <= size * 0.55:
             break

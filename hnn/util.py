@@ -6,7 +6,7 @@ class Linear:
     def calculate(x):
         return x
     @staticmethod
-    def derivative(x):
+    def derivative(y):
         return 1
 
 class Sigmoid:
@@ -15,8 +15,8 @@ class Sigmoid:
     def calculate(x):
         return 1 / (1 + math.exp(-x))
     @staticmethod
-    def derivative(x):
-        return Sigmoid.activate(x) * (1 - Sigmoid.activate(x))
+    def derivative(y):
+        return y * (1 - y)
 
 class Tanh:
     'tanh'
@@ -24,8 +24,8 @@ class Tanh:
     def calculate(x):
         return math.tanh(x)
     @staticmethod
-    def derivative(x):
-        return 1 - Tanh.activate(x) ** 2
+    def derivative(y):
+        return 1 - y * y
 
 class ReLU:
     'ReLU'
@@ -33,8 +33,8 @@ class ReLU:
     def calculate(x):
         return max([0, x])
     @staticmethod
-    def derivative(x):
-        return int(x >= 0)
+    def derivative(y):
+        return int(y > 0)
 
 class RMSE:
     def calculate(predictions, labels):

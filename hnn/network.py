@@ -19,14 +19,21 @@ class Network:
         for layer in self.layers:
             for node in layer.nodes:
                 self.nodes.append(node)
+        
+        self.input = None
+        self.output = None
 
     def execute(self, inputs):
-        output = inputs
+        self.input = inputs
+        output = self.input
         for layer in self.layers:
             output = layer.execute(output)
-        return output
+        self.output = output
+        return self.output
 
     def reset(self):
+        self.input = None
+        self.output = None
         for layer in self.layers:
             layer.reset()
 

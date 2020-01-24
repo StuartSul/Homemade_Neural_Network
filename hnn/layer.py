@@ -9,13 +9,19 @@ class Layer:
         self.nodes = []
         for i in range(self.node_count):
             self.nodes.append(Node(self.id + 'N' + str(i), self.input_count, self.activation))
+        self.input = None
+        self.output = None
 
     def execute(self, inputs):
+        self.input = inputs
         output = []
         for node in self.nodes:
-            output.append(node.execute(inputs))
-        return output
+            output.append(node.execute(self.input))
+        self.output = output
+        return self.output
 
     def reset(self):
+        self.input = None
+        self.output = None
         for node in self.nodes:
             node.reset()

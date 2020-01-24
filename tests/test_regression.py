@@ -1,7 +1,7 @@
 from inspect import signature
 from random import random
 
-from .test_global import *
+from tests.test_global import *
 
 # y = x
 def sample_relation(x):

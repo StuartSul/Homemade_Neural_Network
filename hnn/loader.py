@@ -1,5 +1,5 @@
-from .network import Network
-from .util import Activation
+from hnn.network import Network
+from hnn.util import Activation
 
 magic = 'hnn_network70527919'
 separator = '\n'

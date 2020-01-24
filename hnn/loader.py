@@ -1,5 +1,5 @@
 from .network import Network
-from .util import *
+from .util import Activation
 
 magic = 'hnn_network70527919'
 separator = '\n'
@@ -43,7 +43,6 @@ def load_network(filename):
             index += 1
     
     return network
-
 
 def save_network(network, filename):
     data = magic + separator

@@ -1,8 +1,8 @@
 from hnn.node import Node
 
 class Layer:
-    def __init__(self, id, input_count, node_count, activation):
-        self.id = id
+    def __init__(self, layer_id, input_count, node_count, activation):
+        self.id = layer_id
         self.input_count = input_count
         self.node_count = node_count
         self.activation = activation

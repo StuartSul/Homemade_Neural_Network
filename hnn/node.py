@@ -1,8 +1,8 @@
 import random
 
 class Node:
-    def __init__(self, id, input_count, activation):
-        self.id = id
+    def __init__(self, node_id, input_count, activation):
+        self.id = node_id
         self.input_count = input_count
         self.activation = activation
         self.weights = []

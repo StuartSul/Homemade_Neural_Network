@@ -2,8 +2,8 @@ from random import random
 from hnn.layer import Layer
 
 class Network:
-    def __init__(self, id, input_count, output_count, structure, activation):
-        self.id = id
+    def __init__(self, network_id, input_count, output_count, structure, activation):
+        self.id = network_id
         self.input_count = input_count
         self.output_count = output_count
         self.structure = structure

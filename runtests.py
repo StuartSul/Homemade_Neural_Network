@@ -16,8 +16,8 @@ train_ratio = 0.8
 loss_function = util.LogLoss()
 
 batch_size = 5
-learning_rate = 0.1
-total_epochs = 20000
+learning_rate = 0.03
+total_epochs = 50000
 periods = 20
 
 my_hnn = hnn(network_id, input_count, output_count, structure, activation, 

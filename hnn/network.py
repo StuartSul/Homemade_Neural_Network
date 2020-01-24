@@ -45,5 +45,5 @@ class Network:
             for node in layer.nodes:
                 desc += '        Node ID: {}\n'.format(node.id)
                 for i in range(len(node.weights)):
-                    desc += '            Weight {}: {}\n'.format(i, nodes.weights[i])
+                    desc += '            Weight {}: {}\n'.format(i, node.weights[i])
         return desc

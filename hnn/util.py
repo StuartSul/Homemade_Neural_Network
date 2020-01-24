@@ -1,52 +1,83 @@
 import math
 
-class Activation:
+class Linear:
+    'linear'
     @staticmethod
-    def linear(x):
-        'linear'
+    def calculate(x):
         return x
-
     @staticmethod
-    def sigmoid(x):
-        'sigmoid'
+    def differentiate(x):
+        return 1
+
+class Sigmoid:
+    'sigmoid'
+    @staticmethod
+    def calculate(x):
         return 1 / (1 + math.exp(-x))
-
     @staticmethod
-    def tanh(x):
-        'tanh'
+    def differentiate(x):
+        return Sigmoid.activate(x) * (1 - Sigmoid.activate(x))
+
+class Tanh:
+    'tanh'
+    @staticmethod
+    def calculate(x):
         return math.tanh(x)
-
     @staticmethod
-    def ReLU(x):
-        'ReLU'
+    def differentiate(x):
+        return 1 - Tanh.activate(x) ** 2
+
+class ReLU:
+    'ReLU'
+    @staticmethod
+    def calculate(x):
         return max([0, x])
-
-class Loss:
     @staticmethod
-    def RMSE(predictions, label):
+    def differentiate(x):
+        return int(x >= 0)
+
+class RMSE:
+    def calculate(predictions, labels):
         loss = 0.0
-        for prediction in predictions:
-            loss += (prediction - label) * (prediction - label)
-        return (loss / len(predictions))**0.5
+        for i in range(len(predictions)):
+            loss += (predictions[i] - labels[i]) * (predictions[i] - labels[i])
+        loss = (loss / len(predictions))**0.5
+        return loss
+    def differentiate(predictions, labels):
+        derivative = 0.0
+        for i in range(len(predictions)):
+            derivative += 2 * (predictions[i] - labels[i])
+        derivative /= len(predictions)
+        return derivative
 
-    @staticmethod
-    def log_loss(predictions, label):
+class log_loss:
+    def calculate(predictions, labels):
         loss = 0.0
-        for prediction in predictions:
-            loss += (label - 1) * math.log(1 - prediction) - label * math.log(prediction)
-        return loss / len(predictions)
+        for i in range(len(predictions)):
+            loss += (labels[i] - 1) * math.log(1 - predictions[i]) - labels[i] * math.log(predictions[i])
+        loss /= len(predictions)
+        return loss
+    def differentiate(predictions, labels):
+        derivative = 0.0
+        for i in range(len(predictions)):
+            derivative += (labels[i] - predictions[i]) / (predictions[i] * (predictions[i] - 1))
+        loss /= len(predictions)
+        return derivative
 
-class Regularization:
+class L1:
     @staticmethod
-    def L1(weights, lamb):
+    def calculate(weights, lamb):
         complexity = 0.0
         for weight in weights:
             complexity += abs(weight)
-        return lamb * complexity
+        complexity *= lamb
+        return complexity
 
+class L2:
     @staticmethod
-    def L2(weights, lamb):
+    def calculate(weights, lamb):
         complexity = 0.0
         for weight in weights:
             complexity += weight * weight
-        return lamb * complexity
+        complexity *= lamb
+        return complexity

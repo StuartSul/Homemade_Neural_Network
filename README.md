@@ -14,11 +14,11 @@ To generate your own test data with user-defined data relation, use the modules 
 from tests import test_global, test_classification, test_regression
 
 # Generates classification test data
-test_classification.generate(MIN_FEATURE_VALUE, MAX_FEATURE_VALUE, DATA_SIZE, divider=YOUR_FUNCTION)
+test_classification.generate(DATA_SIZE, divider=YOUR_FUNCTION)
 features, labels = test_global.load_data(test_global.default_filename_classification)
 
 # Generates regression test data
-test_regression.generate(MIN_FEATURE_VALUE, MAX_FEATURE_VALUE, DATA_SIZE, relation=YOUR_FUNCTION)
+test_regression.generate(DATA_SIZE, relation=YOUR_FUNCTION)
 features, labels = test_global.load_data(test_global.dafault_filename_regression)
 
 ```
@@ -28,10 +28,24 @@ To train and build network for your own use, you may import hnn on your program 
 ``` python3
 from hnn.hnn import hnn
 
-my_hnn = hnn(NETWORK_NAME, INPUT_WIDTH, NUMBER_OF_LAYERS,
-                NODES_PER_LAYER, FEATURES, LABELS, TRAIN_TEST_RATIO)
+my_hnn = hnn(NETWORK_NAME, INPUT_COUNT, OUTPUT_COUNT, STRUCTURE, ACTIVATION
+                FEATURES, LABELS, TRAIN_TEST_RATIO, LOSS_FUNCTION)
 
 my_hnn.train(BATCH_SIZE, LEARNING_RATE, TOTAL_EPOCHS, PERIODS)
+
+my_hnn.predict(NEW_DATA)
+```
+
+ACTIVATION and LOSS_FUNCTION are defined under hnn/util.py, and structure should be a list of integer, the length of list corresponding to number of layers and each integer value corresponding to number of nodes in each layer. For instance:
+
+``` python3
+from hnn.hnn import hnn
+import hnn.util
+
+my_hnn = hnn('TEST', 4, 1, [4, 4, 4], hnn.util.Sigmoid()
+                FEATURES, LABELS, 0.8, hnn.util.RMSE())
+
+my_hnn.train(5, 0.3, 10000, 20)
 
 my_hnn.predict(NEW_DATA)
 ```
@@ -56,8 +70,6 @@ new_hnn = hnn.load('x=y_regression.hnn')
 new_hnn.predict(NEW_DATA)
 ```
 
-This will be uploaded on pip sooner or later.
-
 ---
 ### hnn/
 Package folder. Defines all network properties, training system, file IO, and other functionalities needed. All APIs are defined in hnn.py.
@@ -69,7 +81,7 @@ Contains test codes for debugging.
 Runs test codes in tests folder.
 
 ### models/
-Contains trained sample networks.
+Contains sample trained models.
 
 ---
 ## History

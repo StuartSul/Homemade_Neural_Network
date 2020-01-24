@@ -1,34 +1,32 @@
-from .network import Network
-from .trainer import Trainer
-from .loader import *
-
+from hnn.network import Network
+from hnn.trainer import Trainer
+from hnn.loader import *
 
 class hnn:
-    def __init__(self, network_name, input_width, num_hidden_layers, 
-                    node_per_layer, features, labels, train_ratio):
+    def __init__(self, network_id, input_count, output_count, structure, activation, 
+                    features, labels, train_ratio, loss_function, regularization=None):
         self.network = None
         self.trainer = None
-        self.init_network(network_name, input_width, num_hidden_layers, node_per_layer)
-        self.init_trainer(features, labels, train_ratio)
+        self.init_network(network_id, input_count, output_count, structure, activation)
+        self.init_trainer(features, labels, train_ratio, loss_function, regularization)
 
-    def init_network(self, network_name, input_width, 
-                        num_hidden_layers, node_per_layer):
-        if type(network_name) is not str:
-            print('ERROR: must provide string value for network_name')
+    def init_network(self, network_id, input_count, output_count, structure, activation):
+        if type(network_id) is not str:
+            print('ERROR: must provide string value for network_id')
             return
-        if type(input_width) is not int or input_width < 1:
-            print('ERROR: input_width must be an integer value greater than or equal to 1')
+        if type(input_count) is not int or input_count < 1:
+            print('ERROR: input_count must be an integer value greater than or equal to 1')
             return
-        elif type(num_hidden_layers) is not int or num_hidden_layers < 1:
-            print('ERROR: num_hidden_layers must be an integer value greater than or equal to 1')
+        elif type(output_count) is not int or output_count < 1:
+            print('ERROR: output_count must be an integer value greater than or equal to 1')
             return
-        elif type(node_per_layer) is not int or num_hidden_layers < 1:
-            print('ERROR: node_per_layer must be an integer value greater than or equal to 1')
+        elif type(structure) is not list or type(structure[0]) is not int:
+            print('ERROR: structure must be a list of integers')
             return
 
-        self.network = Network(network_name, input_width, num_hidden_layers, node_per_layer)
+        self.network = Network(network_id, input_count, output_count, structure, activation)
 
-    def init_trainer(self, features, labels, train_ratio):
+    def init_trainer(self, features, labels, train_ratio, loss_function, regularization):
         if self.network == None:
             print('ERROR: must initialize network first')
             return
@@ -44,15 +42,14 @@ class hnn:
         elif len(features) == 0 or len(labels) == 0 or len(features) != len(labels):
             print('ERROR: features and labels must have same length')
             return
-        elif len(features[0]) != self.network.input_width:
+        elif len(features[0]) != self.network.input_count:
             print('ERROR: input_width and the length of each feature must be equal')
             return
         elif type(labels[0]) is not int and type(labels[0]) is not float:
             print('ERROR: each label must consist of a single numeric value')
-            print(labels[0])
             return
 
-        self.trainer = Trainer(self.network, features, labels, train_ratio)
+        self.trainer = Trainer(self.network, features, labels, train_ratio, loss_function)
 
     def train(self, batch_size, learning_rate, total_epochs, periods):
         if self.network == None:
@@ -77,14 +74,16 @@ class hnn:
         epochs_per_period = total_epochs // periods
         print('\nInitiating training on network ' + self.network.id + "...\n")
         for i in range(periods):
-            print("Period " + str(i+1) + " out of " + str(periods))
-            print("  loss: " + str(self.trainer.train(batch_size, learning_rate, epochs_per_period)))
+            print('Period ' + str(i+1) + ' out of ' + str(periods))
+            train_loss, test_loss = self.trainer.train(batch_size, learning_rate, epochs_per_period)
+            print('  Training loss: ' + str(train_loss))
+            print('  Testing  loss: ' + str(test_loss))
         print('\nTraining complete\n')
 
     def predict(self, feature):
         if self.network == None:
             print('ERROR: Must initialize network first')
-        return self.network.execute(feature)
+        return self.network.execute(feature)[0]
 
     def save(self, filename):
         if self.network == None:
@@ -95,9 +94,9 @@ class hnn:
     @classmethod
     def load(cls, filename):
         network = load_network(filename)
-        new_hnn = cls('', 1, 1, 1, [[1]], [1], .1)
+        new_hnn = cls('', 1, 1, [1], None, [[1]], [1], .1, None)
         new_hnn.network = network
-        #new_hnn.trainer = None
+        new_hnn.trainer = None
         print('Successfully loaded network ' + network.id)
         return new_hnn
 

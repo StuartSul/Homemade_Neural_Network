@@ -3,21 +3,21 @@ from hnn import util
 from tests import test_global, test_classification, test_regression
 
 features, labels = test_global.load_data(
-            test_regression.generate(2000, save=False),
+            test_classification.generate(2000, save=False),
             isfile=False)
 
 network_id = 'Test_Network'
 input_count = len(features[0])
 output_count = 1
-structure = [8, 8, 8, 8, 8]
+structure = [4, 4]
 activation = util.Sigmoid()
 
 train_ratio = 0.8
-loss_function = util.RMSE()
+loss_function = util.LogLoss()
 
 batch_size = 5
-learning_rate = .1
-total_epochs = 2000
+learning_rate = 0.1
+total_epochs = 20000
 periods = 20
 
 my_hnn = hnn(network_id, input_count, output_count, structure, activation, 

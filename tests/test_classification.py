@@ -7,9 +7,8 @@ from tests.test_global import *
 def sample_divider(x, y):
     return y - x
 
-def generate(min, max, size, divider=sample_divider, 
-                filename=default_filename_classification, save=True):
-    input_width = len(signature(divider).parameters)
+def generate(size, divider=sample_divider, filename=default_filename_classification, save=True):
+    input_count = len(signature(divider).parameters)
     while True:
         data = []
         count = 0
@@ -17,8 +16,8 @@ def generate(min, max, size, divider=sample_divider,
         for i in range(size):
             data.append([])
 
-            for j in range(input_width):
-                data[i].append((max - min) * random() + min)
+            for j in range(input_count):
+                data[i].append(random())
 
             if divider(*data[i]) >= 0:
                 data[i].append(1.0)

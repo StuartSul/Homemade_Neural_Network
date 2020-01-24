@@ -7,15 +7,13 @@ from tests.test_global import *
 def sample_relation(x):
     return x
 
-def generate(min, max, size, relation=sample_relation, 
-                filename=dafault_filename_regression, save=True):
-    input_width = len(signature(relation).parameters)
- 
+def generate(size, relation=sample_relation, filename=dafault_filename_regression, save=True):
+    input_count = len(signature(relation).parameters)
     data = []
     for i in range(size):
         data.append([])
-        for j in range(input_width):
-            data[i].append((max - min) * random() + min)
+        for j in range(input_count):
+            data[i].append(random())
         data[i].append(relation(*data[i]))
 
     data_str = ''

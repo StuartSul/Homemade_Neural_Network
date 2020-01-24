@@ -49,16 +49,18 @@ class RMSE:
         return 2 * (prediction - label)
 
 class LogLoss:
+    eps = 0.000000000001
     @staticmethod
     def calculate(predictions, labels):
         loss = 0.0
         for i in range(len(predictions)):
-            loss += (labels[i] - 1) * math.log(1 - predictions[i]) - labels[i] * math.log(predictions[i])
+            loss += (labels[i] - 1) * math.log(1 - predictions[i] + LogLoss.eps)
+            loss -= labels[i] * math.log(predictions[i] + LogLoss.eps)
         loss /= len(predictions)
         return loss
     @staticmethod
     def derivative(prediction, label):
-        return (label - prediction) / (prediction * (prediction - 1))
+        return (label - prediction) / (prediction * (prediction - 1) + LogLoss.eps)
 
 class L1:
     @staticmethod

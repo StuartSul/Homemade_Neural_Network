@@ -1,5 +1,3 @@
-from math import log
-from operator import add
 from random import random, sample
 
 from hnn.network import Network

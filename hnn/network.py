@@ -1,4 +1,3 @@
-from random import random
 from hnn.layer import Layer
 
 class Network:

@@ -8,7 +8,7 @@ class Layer:
         self.activation = activation
         self.nodes = []
         for i in range(self.node_count):
-            self.nodes.append(Node(self.id + "N" + str(i), self.input_count, self.activation))
+            self.nodes.append(Node(self.id + 'N' + str(i), self.input_count, self.activation))
 
     def execute(self, inputs):
         output = []

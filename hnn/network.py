@@ -14,7 +14,7 @@ class Network:
 
         network_builder = [self.input_count] + structure + [self.output_count]
         for i in range(len(network_builder) - 1):
-            self.layers.append(Layer("L" + str(i), network_builder[i], network_builder[i + 1], self.activation))
+            self.layers.append(Layer('L' + str(i), network_builder[i], network_builder[i + 1], self.activation))
 
         for layer in self.layers:
             for node in layer.nodes:
@@ -33,21 +33,15 @@ class Network:
             layer.reset()
 
     def __repr__(self):
-        desc = "Network ID: " + self.id + '\n'
-        desc += "Current input: " + str(self.input) + '\n'
+        desc = 'Network ID: {} ({} layers with total of {} nodes, {} activation)\n'.format(
+                            self.id, len(self.layers), len(self.nodes), self.activation.__doc__)
         for layer in self.layers:
-            desc += "    Layer ID: " + layer.id + '\n'
-            desc += "        Given input: " + str(layer.input) + '\n'
+            desc += '    Layer ID: {} (receives {} inputs with {} nodes)\n'.format(
+                                layer.id, layer.input_count, len(layer.nodes)
             for node in layer.nodes:
-                desc += "        Node ID: " + node.id + '\n'
-                desc += "            Weights: " + str(node.weights) + '\n'
-                desc += "            Current output: " + str(node.output) + '\n'
-        desc += "    Layer ID: " + self.output_layer.id + '\n'
-        for node in self.output_layer.nodes:
-            desc += "        Node ID: " + node.id + '\n'
-            desc += "            Weights: " + str(node.weights) + '\n'
-            desc += "            Current output: " + str(node.output) + '\n'
-        desc += "Final output: " + str(self.output) + '\n\n'
+                desc += '        Node ID: {}\n'.format(node.id)
+                for i in range(len(node.weights)):
+                    desc += '            Weight {}: {}\n'.format(i, nodes.weights[i])
         return desc
 
     def modify(self, amount, shuffle=False):

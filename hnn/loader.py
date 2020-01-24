@@ -1,7 +1,7 @@
 from hnn.network import Network
 from hnn.util import *
 
-magic = 'hnn_network70527919'
+magic = 'hnn_network'
 separator = '\n'
 
 def load_network(filename):
@@ -51,7 +51,7 @@ def save_network(network, filename):
             str(network.output_count) + separator +\
             str(len(network.structure))
     
-    for node_count in structure:
+    for node_count in network.structure:
         data += separator + str(node_count)
     
     data += separator + network.activation.__doc__

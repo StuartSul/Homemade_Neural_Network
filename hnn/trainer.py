@@ -33,8 +33,8 @@ class Trainer:
             for j in range(layer.node_count):
                 node = layer.nodes[j]
                 for k in range(len(derivatives[j])):
-                    derivatives[j][k] *= layer.activation.derivatives(layer.output[j])
-                derivatives[j] = sum(derivative[j])
+                    derivatives[j][k] *= layer.activation.derivative(layer.output[j])
+                derivatives[j] = sum(derivatives[j])
                 gradients[0].append(list(map(lambda x: x * derivatives[j], layer.input)))
                 for k in range(layer.input_count):
                     next_derivatives[k].append(node.weights[k] * derivatives[j])
@@ -43,9 +43,9 @@ class Trainer:
             
     def modify_network(self, gradients, learning_rate):
         for example in gradients:
-            for layer_index in range(len(example):
+            for layer_index in range(len(example)):
                 for node_index in range(len(example[layer_index])):
-                    for gradient_index in range(len(example[layer_index][node_index]):)
+                    for gradient_index in range(len(example[layer_index][node_index])):
                         self.network.layers[layer_index].nodes[node_index].weights[gradient_index] -=\
                             learning_rate * example[layer_index][node_index][gradient_index] / len(gradients)
 
@@ -54,7 +54,7 @@ class Trainer:
         labels = []
         for test_example in data_set:
             predictions.append(self.network.execute(test_example[0])[0])
-            labels.append[test_example[1]]
+            labels.append(test_example[1])
         loss = self.loss_function.calculate(predictions, labels)
         return loss
 

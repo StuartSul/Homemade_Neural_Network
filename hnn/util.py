@@ -2,6 +2,10 @@ import math
 
 class Activation:
     @staticmethod
+    def linear(x):
+        return x
+
+    @staticmethod
     def sigmoid(x):
         return 1 / (1 + math.exp(-x))
 

@@ -1,5 +1,5 @@
 from hnn.network import Network
-from hnn.util import Activation
+from hnn.util import *
 
 magic = 'hnn_network70527919'
 separator = '\n'
@@ -27,13 +27,13 @@ def load_network(filename):
     index += 1
 
     if activation_doc == 'linear':
-        activation = Activation.linear
+        activation = Linear()
     elif activation_doc == 'sigmoid':
-        activation = Activation.sigmoid
+        activation = Sigmoid()
     elif activation_doc == 'tanh':
-        activation = Activation.tanh
+        activation = Tanh()
     elif activation_doc == 'ReLU':
-        activation = Activation.ReLU
+        activation = ReLU()
 
     network = Network(network_id, input_count, output_count, structure, activation)
 

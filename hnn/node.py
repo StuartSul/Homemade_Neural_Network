@@ -13,7 +13,7 @@ class Node:
         output = self.weights[0]
         for i in range(self.input_count):
             output += inputs[i] * self.weights[i + 1]
-        output = self.activation(output)
+        output = self.activation.calculate(output)
         return output
 
     def reset(self):

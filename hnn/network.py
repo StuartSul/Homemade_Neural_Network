@@ -20,8 +20,6 @@ class Network:
             for node in layer.nodes:
                 self.nodes.append(node)
 
-        self.mod_selection = None
-
     def execute(self, inputs):
         output = inputs
         for layer in self.layers:
@@ -37,15 +35,9 @@ class Network:
                             self.id, len(self.layers), len(self.nodes), self.activation.__doc__)
         for layer in self.layers:
             desc += '    Layer ID: {} (receives {} inputs with {} nodes)\n'.format(
-                                layer.id, layer.input_count, len(layer.nodes)
+                                layer.id, layer.input_count, len(layer.nodes))
             for node in layer.nodes:
                 desc += '        Node ID: {}\n'.format(node.id)
                 for i in range(len(node.weights)):
                     desc += '            Weight {}: {}\n'.format(i, nodes.weights[i])
         return desc
-
-    def modify(self, amount, shuffle=False):
-        if shuffle == True or self.mod_selection == None:
-            self.mod_selection = [int(len(self.nodes) * random())]
-            self.mod_selection.append(int(len(self.nodes[self.mod_selection[0]].weights) * random()))
-        self.nodes[self.mod_selection[0]].weights[self.mod_selection[1]] += amount

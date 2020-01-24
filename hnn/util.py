@@ -37,22 +37,26 @@ class ReLU:
         return int(y > 0)
 
 class RMSE:
+    @staticmethod
     def calculate(predictions, labels):
         loss = 0.0
         for i in range(len(predictions)):
             loss += (predictions[i] - labels[i]) * (predictions[i] - labels[i])
         loss = (loss / len(predictions))**0.5
         return loss
+    @staticmethod
     def derivative(prediction, label):
         return 2 * (prediction - label)
 
 class LogLoss:
+    @staticmethod
     def calculate(predictions, labels):
         loss = 0.0
         for i in range(len(predictions)):
             loss += (labels[i] - 1) * math.log(1 - predictions[i]) - labels[i] * math.log(predictions[i])
         loss /= len(predictions)
         return loss
+    @staticmethod
     def derivative(prediction, label):
         return (label - prediction) / (prediction * (prediction - 1))
 

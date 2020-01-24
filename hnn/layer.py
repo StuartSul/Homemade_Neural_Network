@@ -8,12 +8,12 @@ class Layer:
         self.activation = activation
         self.nodes = []
         for i in range(self.node_count):
-            self.nodes.append(Node(self.id + 'N' + str(i), self.input_count, self.activation))
+            self.nodes.append(Node(self.id + 'N' + str(i), self.input_count + 1, self.activation))
         self.input = None
         self.output = None
 
     def execute(self, inputs):
-        self.input = inputs
+        self.input = inputs + [1] # bias
         output = []
         for node in self.nodes:
             output.append(node.execute(self.input))

@@ -58,8 +58,8 @@ class hnn:
         elif self.trainer == None:
             print('ERROR: must initialize trainer first')
             return
-        if type(batch_size) is not int or batch_size < 1 or batch_size > len(self.network.nodes):
-            print('ERROR: batch_size must be an integer value at the range of [1, NUM_NODES]')
+        if type(batch_size) is not int or batch_size < 1 or batch_size > len(self.trainer.features):
+            print('ERROR: batch_size must be an integer value at the range of [1, NUM_FEATURES]')
             return
         elif type(learning_rate) is not float or learning_rate <= 0:
             print('ERROR: learning_rate must be a float value greater than 0')
